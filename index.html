@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>до встречи осталось:</title>
+    <style>
+        #t, #block_summ
+        {
+            font-size: 50px;
+            text-transform: uppercase;
+            width: 100%;
+            position: absolute;
+            top: 50%;
+
+            text-align: center;
+            display: block;
+            /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ffffff+0,ffffff+50,000000+51,000000+100 */
+            background: linear-gradient(90deg, #fff 50%, #000 50%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        #block_summ {
+            top: 65%!important;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .slide1 {
+            position: absolute;
+            top: 200px;
+            left: 200px;
+            display: block;
+        }
+        .slide2 {
+            position: absolute;
+            top: 200px;
+            right: 200px;
+            display: block;
+        }
+    </style>
+</head>
+<body onload="time()" style="padding: 0; margin: 0; font-family: sans-serif;">
+<div class="black" style="color: #fff; background: #000; width: 50%; position:fixed; height: 100%;">
+    <h1 align="center">Илья Юрьевич</h1>
+</div>
+<div class="white" style="width: 50%; position:fixed; height: 100%; margin-left: 50%">
+<h1 align="center">Наталья Константиновна</h1>
+</div>
+<span id="t"></span>
+
+<div class="slide1" id="1">
+    <img src="http://placehold.it/100.jpg" height="100" />
+</div>
+<span id="block_summ"></span>
+<div class="slide2" id="2">
+    <img src="http://placehold.it/100.jpg" height="100" />
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script>
+
+    var summ;
+    timeend= new Date();
+    timeend= new Date(timeend.getYear()>1900?(timeend.getYear()+1):(timeend.getYear()+1901),0,1);
+
+
+    function time() {
+        today = new Date();
+        today = Math.floor((timeend - today) / 1000);
+        tsec = today % 60;
+        today = Math.floor(today / 60);
+        if (tsec < 10) tsec = '0' + tsec;
+        tmin = today % 60;
+        today = Math.floor(today / 60);
+        if (tmin < 10) tmin = '0' + tmin;
+        thour = today % 24;
+        today = Math.floor(today / 24);
+        timestr = today + " Дней " + thour + " Часов " + tmin + " Минут " + tsec + " Секунд ";
+        document.getElementById('t').innerHTML = timestr;
+        window.setTimeout("time()", 1000);
+    }
+
+        var block = document.getElementById(1);
+        var block2 = document.getElementById(2);
+
+    var thisSecond2 = new Date(2020,0,1);
+    console.log("Date - " + thisSecond2);
+    today = new Date();
+    var times = today - thisSecond2;
+    times = Math.round(times) / 3600000 / 24;
+    times = Math.round(times);
+    console.log("Разница - " + times);
+    var steps = times * 50 / 366;
+    console.log("Шаг 1 - " + steps);
+    step = 50 / 366;
+
+        move(block2, block, 0, 50, step, 31622400000, steps);
+
+        function move(element2, element, from2, to, step, delay, startbb = -1) {
+
+        let position = parseFloat(element.style.left, 10);
+        var from22 = from2;
+        var from = from22;
+
+        if (startbb > 0 ) {from = startbb;}
+
+        position = isNaN(position) ? from : position;
+
+        if (position >= to) {
+            position = from;
+            ourStep = 0;
+        } else {
+            position += step;
+            console.log("Позиция 12.47 - " + position);
+
+        }
+
+
+        element.style.left = position + "%";
+        element2.style.right = position + "%";
+        //    setInterval(function () {
+                setTimeout(function () {
+            move(element2, element, from22, to, step, delay);
+        }, delay);
+        document.getElementById('block_summ').innerHTML= "Пройдено " + parseInt(position) + "%";
+    }
+
+
+    // 1 минута = 60 000 миллисекунд
+    //console.log("position:" + position);
+
+
+
+</script>
+</body>
+</html>
